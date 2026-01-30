@@ -5,7 +5,7 @@ from openai import OpenAI
 st.set_page_config(page_title="Diagnóstico JAC - Perplexity", layout="centered")
 
 st.title("📊 Diagnóstico de Maturidade de Crédito")
-st.markdown("Responda às perguntas para receber uma análise completa via IA.")
+st.markdown("Responda às perguntas para receber uma análise completa via IA (Perplexity).")
 
 # --- SEU PROMPT PERSONALIZADO AQUI ---
 # Edite este texto entre as aspas com o prompt que você já tem pronto.
@@ -73,13 +73,14 @@ if submitted:
     # 3. Chamar a API da Perplexity
     try:
         with st.spinner('A Inteligência Artificial está analisando seu perfil...'):
+            # AQUI ESTÁ A MÁGICA: Usamos o cliente OpenAI mas apontamos para a Perplexity
             client = OpenAI(
-                api_key=st.secrets["PERPLEXITY_API_KEY"], # Pega a chave dos segredos
+                api_key=st.secrets["PERPLEXITY_API_KEY"], 
                 base_url="https://api.perplexity.ai"
             )
 
             response = client.chat.completions.create(
-                model="sonar-pro", # Modelo recomendado da Perplexity
+                model="sonar-pro", # Modelo da Perplexity
                 messages=[
                     {"role": "system", "content": "Você é um consultor especialista em crédito."},
                     {"role": "user", "content": mensagem_final},
